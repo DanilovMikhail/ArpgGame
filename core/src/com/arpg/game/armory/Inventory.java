@@ -28,6 +28,27 @@ public class Inventory {
     private int coins;
     private int selected;
 
+    ////////////////////////////////////////////////////
+    //2. размер рюкзака по умолчанию
+    private int bagSize;
+    private final int maxBagSize = 27;
+
+    public int getBagSize(){
+        return this.bagSize;
+    }
+
+    public int getMaxBagSize(){
+        return this.maxBagSize;
+    }
+
+    public void addSizeBag(int addSize){
+        if ((this.bagSize + addSize) <= maxBagSize) {
+            this.bagSize += addSize;
+        }
+    }
+    //
+    ////////////////////////////////////////////////////
+
     public int getCoins() {
         return coins;
     }
@@ -80,6 +101,7 @@ public class Inventory {
     public Inventory(Hero hero) {
         this.hero = hero;
         this.items = new ArrayList<>();
+        this.bagSize = 9;
     }
 
     public void render(SpriteBatch batch, BitmapFont font) {
@@ -93,9 +115,17 @@ public class Inventory {
         font.draw(batch, builder, 1000, 700);
     }
 
+    public void setBagSize(int delta){
+        this.bagSize += delta;
+    }
+
     public void add(Item item) {
         if (!item.isStackable()) {
-            items.add(new InventoryEntry(item, 1));
+            /////////////////////////////
+            //2.
+            if( (this.bagSize + items.size()) <= this.maxBagSize) {
+                items.add(new InventoryEntry(item, 1));
+            }
         } else {
             for (int i = 0; i < items.size(); i++) {
                 if (items.get(i).item.getTitle().equals(item.getTitle())) {
@@ -103,7 +133,10 @@ public class Inventory {
                     return;
                 }
             }
-            items.add(new InventoryEntry(item, 1));
+            //2.
+            if (items.size() <= this.bagSize) {
+                items.add(new InventoryEntry(item, 1));
+            }
         }
     }
 }

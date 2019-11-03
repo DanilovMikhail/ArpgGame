@@ -92,9 +92,12 @@ public abstract class Unit implements MapElement {
                 attacker.getStats().fillHp();
             }
             gc.getInfoController().setup(attacker.getPosition().x, attacker.getPosition().y + 40, "exp +" + exp, Color.YELLOW);
+            ///////////////////////////////////////////////////////
+            //1. Шмот выпадает только когда бьет Hero
             if (attacker instanceof Hero) {
                 gc.getPowerUpsController().setup(position.x, position.y, 1.2f, 2, stats.getLevel());
             }
+            ///////////////////////////////////////////////////////
         }
     }
 

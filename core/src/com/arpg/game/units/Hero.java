@@ -118,8 +118,25 @@ public class Hero extends Unit {
     }
 
     public void renderHUD(SpriteBatch batch, BitmapFont font) {
-        //
-        font.draw(batch, "SCORE: " + score + "\nLEVEL: " + stats.getLevel() + "\nHP: " + stats.getHp() + " / " + stats.getHpMax() + "\nCOINS: " + inventory.getCoins(), 20, 700);
+        //3.Изменен HP bar Hero
+        int imageBar = (int) Math.floor(stats.getHp() / (stats.getHpMax() / 16));
+        if (imageBar == 1){}
+        else if (imageBar == 2){}
+        else if (imageBar == 3){}
+        else if (imageBar == 4){}
+        else if (imageBar == 5){}
+        else if (imageBar == 6){}
+        else if (imageBar == 7){}
+        else if (imageBar == 8){}
+        else if (imageBar == 9){}
+        else if (imageBar == 10){}
+        else if (imageBar == 11){}
+        else if (imageBar == 12){}
+        else if (imageBar == 13){}
+        else if (imageBar == 14){}
+        else {int f = 0;}
+
+        font.draw(batch, "SCORE: " + score + "\nLEVEL: " + stats.getLevel() + "\nHP: " + stats.getHp() + " / " + stats.getHpMax() + "\nCOINS: " + inventory.getCoins() + "\nBag: " + inventory.getBagSize(), 20, 700);
         inventory.render(batch, font);
     }
 
@@ -136,6 +153,8 @@ public class Hero extends Unit {
     }
 
     public void consume(PowerUp p) {
+        boolean deactivate = true;
+
         switch (p.getType()) {
             case COINS:
                 int amount = MathUtils.random(1, 3);
@@ -158,8 +177,19 @@ public class Hero extends Unit {
                 }
                 inventory.add(new Weapon("Sword", Weapon.Type.MELEE,0.5f, 90.0f, minDmg, maxDmg));
                 break;
+            /////////////////////////////////////////////////////////
+            //2.
+            case BAG:
+                int newBag = MathUtils.random(1, 9);
+                if ((inventory.getBagSize() + newBag) <= inventory.getMaxBagSize()){
+                    inventory.setBagSize(newBag);
+                }
+                else {deactivate = false;}
+                break;
         }
-        p.deactivate();
+        if (deactivate) {
+            p.deactivate();
+        }
     }
 
     public void rangedAttack() {

@@ -7,7 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 
 public class PowerUp implements Poolable {
     public enum Type {
-        POTION(0), COINS(1), WEAPON(2), ARMOR(3);
+        POTION(0), COINS(1), WEAPON(2), ARMOR(3), BAG(4);
 
         int index;
 
